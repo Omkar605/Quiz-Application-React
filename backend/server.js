@@ -4,12 +4,9 @@ const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 const cors = require("cors");
 
+// ✅ Enable CORS
 server.use(cors());
 server.use(middlewares);
 server.use(router);
 
-const PORT = process.env.PORT || 3000; // Ensure the port is assigned
-
-server.listen(PORT, () => {
-  console.log(`✅ JSON Server is running on http://localhost:${PORT}`);
-});
+module.exports = server; // ✅ Important for Vercel
