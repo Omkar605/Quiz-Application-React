@@ -73,9 +73,9 @@ function App () {
   const numOfQuestions = questions.length;
   const maxPossiblePoints = questions.reduce ((acc, question) => acc + question.points, 0);
   useEffect (() => {
-    fetch ('https://quiz-app-backend-9mky5c5bb-omkar605s-projects.vercel.app/db')
+    fetch ('https://quiz-app-backend-eta.vercel.app/db')
       .then (response => response.json ())
-      .then (data => dispatch ({type: 'dataRecieved', payload: data}))
+      .then (data => dispatch ({type: 'dataRecieved', payload: data.questions}))
       .catch (() => dispatch ({type: 'dataFailed'}));
   }, []);
   return (
@@ -97,10 +97,7 @@ function App () {
             answer={answer}
           />
           <Footer>
-            <Timer>
-              <p>Time Left</p>
-              <p>00:00</p>
-            </Timer>
+            <Timer />
           <NextButton dispatch={dispatch} answer = {answer} index={index} numOfQuestions={numOfQuestions}/>
           </Footer>
         </>
