@@ -4,9 +4,8 @@ const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 const cors = require("cors");
 
-// ✅ Enable CORS
-server.use(cors());
+server.use(cors()); // Enable CORS to allow frontend access
 server.use(middlewares);
 server.use(router);
 
-module.exports = server; // ✅ Important for Vercel
+module.exports = server; // Export server for Vercel
