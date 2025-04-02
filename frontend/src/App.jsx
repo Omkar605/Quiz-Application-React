@@ -7,6 +7,8 @@ import Questions from './components/Questions.jsx';
 import ProgressBar from './components/ProgressBar.jsx';
 import NextButton from './components/NextButton.jsx';
 import FinishScreen from './components/FinishScreen.jsx';
+import Footer from './components/Footer.jsx';
+import Timer from './components/Timer.jsx';
 const initialState = {
   questions: [],
   status: 'loading',
@@ -71,7 +73,7 @@ function App () {
   const numOfQuestions = questions.length;
   const maxPossiblePoints = questions.reduce ((acc, question) => acc + question.points, 0);
   useEffect (() => {
-    fetch ('http://localhost:5000/questions')
+    fetch ('https://quiz-app-backend-9mky5c5bb-omkar605s-projects.vercel.app/db')
       .then (response => response.json ())
       .then (data => dispatch ({type: 'dataRecieved', payload: data}))
       .catch (() => dispatch ({type: 'dataFailed'}));
@@ -94,7 +96,13 @@ function App () {
             dispatch={dispatch}
             answer={answer}
           />
+          <Footer>
+            <Timer>
+              <p>Time Left</p>
+              <p>00:00</p>
+            </Timer>
           <NextButton dispatch={dispatch} answer = {answer} index={index} numOfQuestions={numOfQuestions}/>
+          </Footer>
         </>
         }
         {status === 'finished' &&
