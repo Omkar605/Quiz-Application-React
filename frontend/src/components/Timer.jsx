@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const Timer = () => {
+const Timer = ({dispatch, secondsRemaining}) => {
+  const mins = Math.floor(secondsRemaining / 60);
+  const sec = secondsRemaining % 60;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      dispatch({ type: 'tick' })
+      if (secondsRemaining <= 0) {
+        clearInterval(timer)
+        dispatch({ type: 'finish' })
+      }
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [dispatch, secondsRemaining]);
   return (
     <div>
-      <p>Time Remaining: 00:00</p>
-      <progress value="0" max="100"></progress>
-      <button>Start</button>
+      <p>Time Remaining: {mins < 10 && "0"}{mins}:{sec < 10 && "0"}{sec}</p>
     </div>
   )
 }
