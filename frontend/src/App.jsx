@@ -82,10 +82,13 @@ function App () {
   const maxPossiblePoints = questions.reduce ((acc, question) => acc + question.points, 0);
   useEffect (() => {
     const API_URL = import.meta.env.VITE_API_URL;
-    fetch (`${API_URL}/db`)
+    fetch (`${API_URL}/questions`)
       .then (response => response.json ())
-      .then (data => dispatch ({type: 'dataRecieved', payload: data.questions}))
-      .catch (() => dispatch ({type: 'dataFailed'}));
+      .then (data => dispatch ({type: 'dataRecieved', payload: data}))
+      .catch (() => {
+        console.error ('Error fetching data');
+        dispatch ({type: 'dataFailed'})
+      });
   }, []);
   return (
     <div className="app">
